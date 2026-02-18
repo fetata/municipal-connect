@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>{{ skill.name }}</h2>
+
+<p><strong>Description:</strong></p>
+<p>{{ skill.description }}</p>
+
+<p><strong>Level:</strong> {{ skill.level }}</p>
+
+<p>
+    <strong>Categories:</strong>
+    {% for category in skill.categories.all %}
+        <span class="badge bg-secondary">
+            {{ category.name }}
+        </span>
+    {% empty %}
+        No categories
+    {% endfor %}
+</p>
+
+<p>
+    <strong>Contact:</strong>
+    {{ skill.contact_name }} | {{ skill.contact_phone }}
+</p>
+
+<a href="{% url 'skills:list' %}" class="btn btn-secondary">
+    Back
+</a>
+<a href="{% url 'skills:edit' skill.pk %}" class="btn btn-warning">
+    Edit
+</a>
+<a href="{% url 'skills:delete' skill.pk %}" class="btn btn-danger">
+    Delete
+</a>
+    
+
+
+{% endblock %}

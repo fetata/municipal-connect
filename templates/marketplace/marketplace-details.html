@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>{{ item.title }}</h2>
+
+{% if item.image %}
+    <img src="{{ item.image.url }}" class="img-fluid mb-3" style="max-height: 400px; object-fit: cover;">
+{% endif %}
+
+<p>{{ item.description }}</p>
+
+<p>
+    <span class="badge bg-primary">{{ item.type }}</span>
+    <span class="badge bg-secondary">{{ item.condition }}</span>
+</p>
+
+<p><strong>Category:</strong> {{ item.category.name }}</p>
+
+<p><strong>Contact:</strong> {{ item.contact_name }} | {{ item.contact_phone }}</p>
+
+<a href="{% url 'marketplace:list' %}" class="btn btn-secondary">
+    Back
+</a>
+<a href="{% url 'marketplace:edit' item.pk %}" class="btn btn-warning">
+    Edit
+</a>
+<a href="{% url 'marketplace:delete' item.pk %}" class="btn btn-danger">
+    Delete
+</a>    
+
+{% endblock %}

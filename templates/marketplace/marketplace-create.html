@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Create Marketplace Item</h2>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button type="submit" class="btn btn-success">
+        Create
+    </button>
+</form>
+
+<a href="{% url 'marketplace:list' %}" class="btn btn-secondary mt-2">
+    Cancel
+</a>
+
+{% endblock %}
