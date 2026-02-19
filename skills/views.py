@@ -1,14 +1,16 @@
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
+from common.mixins import SearchMixin
 from .forms import SkillCreateForm
 from .models import Skill
 
 
-class SkillListView(ListView):
+class SkillListView(SearchMixin, ListView):
     model = Skill
     template_name = "skills/skill-list.html"
     context_object_name = "skills"
+    search_fields = ["name", "description"]
 
 class SkillDetailView(DetailView):
     model = Skill

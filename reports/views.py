@@ -1,14 +1,16 @@
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView
+
+from common.mixins import SearchMixin
 from .models import Report
 from django.views.generic import CreateView
 from django.urls import reverse_lazy
 from .forms import ReportCreateForm
 
-class ReportListView(ListView):
+class ReportListView(SearchMixin, ListView):
     model = Report
     template_name = "reports/report-list.html"
     context_object_name = "reports"
-
+    search_fields = ["title", "description"]
 
 class ReportDetailView(DetailView):
     model = Report

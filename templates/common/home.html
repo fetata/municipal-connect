@@ -1,6 +1,108 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Welcome to Municipal Connect</h1>
-<p>Improving our municipality together.</p>
+
+<div class="bg-white bg-opacity-50 rounded p-5 mb-5 shadow text-center">
+
+
+    <h1 class="display-5 fw-bold mb-3">
+        Strong communities start with small actions.
+    </h1>
+
+    <p class="lead mb-4">
+        Report local issues, share your skills, and help your neighbors.
+        Municipal Connect brings people closer together.
+    </p>
+
+    <div class="d-flex justify-content-center gap-3 flex-wrap">
+        <a href="{% url 'reports:create' %}" class="btn btn-primary btn-lg">
+            Report a Problem
+        </a>
+
+        <a href="{% url 'skills:create' %}" class="btn btn-success btn-lg">
+            Share a Skill
+        </a>
+
+        <a href="{% url 'marketplace:create' %}" class="btn btn-outline-dark btn-lg">
+            Post an Item
+        </a>
+    </div>
+
+</div>
+
+
+<!-- Announcement Section -->
+{% if announcement %}
+<div class="card bg-white bg-opacity-50 shadow-sm h-100">
+
+    <div class="card-body text-center">
+        <h3>{{ announcement.title }}</h3>
+        <p>{{ announcement.content }}</p>
+    </div>
+</div>
+{% endif %}
+
+<!-- Preview Sections -->
+<div class="row mt-4">
+
+    <!-- Reports -->
+    <div class="col-md-4 mb-4">
+        <h4 class="mb-3">Latest Reports</h4>
+
+        <div class="border rounded p-3">
+            {% for report in latest_reports %}
+                <div class="mb-2">
+                    {{ report.title }}
+                </div>
+            {% empty %}
+                <p class="mb-0">No reports yet.</p>
+            {% endfor %}
+        </div>
+
+        <a href="{% url 'reports:list' %}" class="btn btn-sm btn-outline-primary mt-2">
+            View All
+        </a>
+    </div>
+
+    <!-- Skills -->
+    <div class="col-md-4 mb-4">
+        <h4 class="mb-3">Latest Skills</h4>
+
+        <div class="border rounded p-3">
+            {% for skill in latest_skills %}
+                <div class="mb-2">
+                    {{ skill.name }}
+                </div>
+            {% empty %}
+                <p class="mb-0">No skills yet.</p>
+            {% endfor %}
+        </div>
+
+        <a href="{% url 'skills:list' %}" class="btn btn-sm btn-outline-primary mt-2">
+            View All
+        </a>
+    </div>
+
+    <!-- Marketplace -->
+    <div class="col-md-4 mb-4">
+        <h4 class="mb-3">Latest Marketplace Items</h4>
+
+        <div class="border rounded p-3 ">
+            {% for item in latest_items %}
+                <div class="mb-2">
+                    {{ item.title }}
+                </div>
+            {% empty %}
+                <p class="mb-0">No items yet.</p>
+            {% endfor %}
+        </div>
+
+        <a href="{% url 'marketplace:list' %}" class="btn btn-sm btn-outline-primary mt-2">
+            View All
+        </a>
+    </div>
+
+</div>
+
+
 {% endblock %}

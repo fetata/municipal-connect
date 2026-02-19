@@ -1,14 +1,16 @@
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
+from common.mixins import SearchMixin
 from .forms import MarketplaceCreateForm
 from .models import MarketplaceItem
 
 
-class MarketplaceListView(ListView):
+class MarketplaceListView(SearchMixin, ListView):
     model = MarketplaceItem
     template_name = "marketplace/marketplace-list.html"
     context_object_name = "items"
+    search_fields = ["title", "description"]
 
 class MarketplaceDetailView(DetailView):
     model = MarketplaceItem
