@@ -2,28 +2,33 @@
 
 {% block content %}
 
-<h2>{{ report.title }}</h2>
+<div class="glass-panel p-4 p-lg-5 reveal">
+    <div class="section-kicker mb-2">Report Details</div>
+    <h2 class="mb-3">{{ report.title }}</h2>
 
-<p><strong>Location:</strong> {{ report.location }}</p>
+    <p class="text-muted mb-2"><strong>Location:</strong> {{ report.location }}</p>
 
-<p>{{ report.description }}</p>
+    <p class="mb-3">{{ report.description }}</p>
 
-<p>
-    {% if report.is_active %}
-        <span class="badge bg-danger">Active</span>
-    {% else %}
-        <span class="badge bg-success">Resolved</span>
-    {% endif %}
-</p>
+    <p class="mb-3">
+        {% if report.is_active %}
+            <span class="badge bg-danger">Active</span>
+        {% else %}
+            <span class="badge bg-success">Resolved</span>
+        {% endif %}
+    </p>
 
-<p><strong>Contact:</strong> {{ report.contact_name }} | {{ report.contact_phone }}</p>
+    <p class="text-muted mb-4"><strong>Contact:</strong> {{ report.contact_name }} | {{ report.contact_phone }}</p>
 
-<a href="{% url 'reports:list' %}" class="btn btn-secondary">Back</a>
-<a href="{% url 'reports:edit' report.pk %}" class="btn btn-warning">
-    Edit
-</a>
-<a href="{% url 'reports:delete' report.pk %}" class="btn btn-danger">
-    Delete
-</a>
+    <div class="d-flex flex-wrap gap-2">
+        <a href="{% url 'reports:list' %}" class="btn btn-secondary">Back</a>
+        <a href="{% url 'reports:edit' report.pk %}" class="btn btn-warning">
+            Edit
+        </a>
+        <a href="{% url 'reports:delete' report.pk %}" class="btn btn-danger">
+            Delete
+        </a>
+    </div>
+</div>
 
 {% endblock %}

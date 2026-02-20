@@ -2,65 +2,74 @@
 
 {% block content %}
 
-<div class="d-flex justify-content-between align-items-center mb-3">
+<div class="glass-panel p-4 p-lg-5 reveal">
+    <div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4">
+        <div>
+            <div class="section-kicker mb-1">Neighborhood Exchange</div>
+            <h2 class="mb-0">Marketplace</h2>
+        </div>
 
-    <h2>Marketplace</h2>
+        <div class="d-flex flex-wrap gap-2 align-items-center">
+            <form method="get" class="d-flex flex-wrap gap-2">
+                <input type="text"
+                       name="q"
+                       value="{{ request.GET.q }}"
+                       placeholder="Search marketplace..."
+                       class="form-control"
+                       oninput="if(this.value === '') this.form.submit();">
 
-    <form method="get" class="d-flex" style="gap: 10px;">
-        <input type="text"
-               name="q"
-               value="{{ request.GET.q }}"
-               placeholder="Search marketplace..."
-               class="form-control"
-               oninput="if(this.value === '') this.form.submit();">
+            </form>
 
-        <button type="submit" class="btn btn-outline-primary">
-            Search
-        </button>
-    </form>
-
-    <a href="{% url 'marketplace:create' %}" class="btn btn-success">
-        Create Item
-    </a>
-
-</div>
-
-
-
-{% if items %}
-    <div class="row">
-        {% for item in items %}
-            <div class="col-md-4 mb-3">
-                <div class="card h-100">
-
-                    {% if item.image %}
-                        <img src="{{ item.image.url }}" class="card-img-top" style="height: 200px; object-fit: cover;">
-                    {% endif %}
-
-                    <div class="card-body">
-                        <h5>
-                            <a href="{% url 'marketplace:details' item.pk %}">
-                                {{ item.title }}
-                            </a>
-                        </h5>
-                        <p>{{ item.description|truncatechars:60 }}</p>
-
-                        <p>
-                            <span class="badge bg-primary">{{ item.type }}</span>
-                            <span class="badge bg-secondary">{{ item.condition }}</span>
-                        </p>
-
-                        <p>
-                            <strong>Category:</strong> {{ item.category.name }}
-                        </p>
-                    </div>
-
-                </div>
-            </div>
-        {% endfor %}
+            <a href="{% url 'marketplace:create' %}" class="btn btn-success">
+                Create Item
+            </a>
+        </div>
     </div>
-{% else %}
-    <p>No items yet.</p>
-{% endif %}
+
+    {% if items %}
+        <div class="row g-3">
+            {% for item in items %}
+                <div class="col-md-4 reveal reveal-delay-1">
+                    <div class="soft-card h-100 overflow-hidden">
+
+                        {% if item.image %}
+                            <img src="{{ item.image.url }}" class="card-img-top" style="height: 200px; object-fit: cover;">
+                        {% endif %}
+
+                        <div class="p-3">
+                            <h5 class="mb-2">
+                                <a class="text-decoration-none" href="{% url 'marketplace:details' item.pk %}">
+                                    {{ item.title }}
+                                </a>
+                            </h5>
+                            <p class="text-muted mb-2">{{ item.description|truncatechars:60 }}</p>
+
+                            <p class="mb-2">
+                                <span class="badge
+                                    {% if item.type == 'Offer' %}bg-primary
+                                    {% elif item.type == 'Wanted' %}bg-warning text-dark
+                                    {% elif item.type == 'Giveaway' %}bg-success
+                                    {% endif %}
+                                ">
+                                    {{ item.type }}
+                                </span>
+                                {% if item.condition %}
+                                <span class="badge bg-secondary">{{ item.condition }}</span>
+                                {% endif %}
+                            </p>
+
+                            <p class="mb-0">
+                                <strong>Category:</strong> {{ item.category.name }}
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="mb-0 text-muted">No items yet.</p>
+    {% endif %}
+</div>
 
 {% endblock %}

@@ -2,21 +2,25 @@
 
 {% block content %}
 
-<h2>Delete Report</h2>
+<div class="glass-panel p-4 p-lg-5 reveal">
+    <div class="section-kicker mb-2">Confirm</div>
+    <h2 class="mb-3">Delete Report</h2>
 
-<p>Are you sure you want to delete:</p>
+    <p>Are you sure you want to delete:</p>
 
-<h4>{{ object.title }}</h4>
+    <h4 class="mb-4">{{ object.title }}</h4>
 
-<form method="post">
-    {% csrf_token %}
-    <button type="submit" class="btn btn-danger">
-        Confirm Delete
-    </button>
-</form>
-
-<a href="{% url 'reports:details' object.pk %}" class="btn btn-secondary mt-2">
-    Cancel
-</a>
+    <form method="post" class="form-stack">
+        {% csrf_token %}
+        <div class="form-actions">
+            <button type="submit" class="btn btn-danger">
+                Confirm Delete
+            </button>
+            <a href="{% url 'reports:details' object.pk %}" class="btn btn-secondary">
+                Cancel
+            </a>
+        </div>
+    </form>
+</div>
 
 {% endblock %}

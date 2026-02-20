@@ -2,31 +2,47 @@
 
 {% block content %}
 
-<h2>{{ item.title }}</h2>
+<div class="glass-panel p-4 p-lg-5 reveal">
+    <div class="section-kicker mb-2">Marketplace Item</div>
+    <h2 class="mb-3">{{ item.title }}</h2>
 
-{% if item.image %}
-    <img src="{{ item.image.url }}" class="img-fluid mb-3" style="max-height: 400px; object-fit: cover;">
-{% endif %}
+    {% if item.image %}
+        <img src="{{ item.image.url }}" class="img-fluid mb-3 rounded" style="max-height: 400px; object-fit: cover;">
+    {% endif %}
 
-<p>{{ item.description }}</p>
+    <p class="mb-3">{{ item.description }}</p>
 
-<p>
-    <span class="badge bg-primary">{{ item.type }}</span>
-    <span class="badge bg-secondary">{{ item.condition }}</span>
-</p>
+    <p class="mb-3">
+        <span class="badge
+            {% if item.type == 'Offer' %}bg-primary
+            {% elif item.type == 'Wanted' %}bg-warning text-dark
+            {% elif item.type == 'Giveaway' %}bg-success
+            {% endif %}
+        ">
+            {{ item.type }}
+        </span>
 
-<p><strong>Category:</strong> {{ item.category.name }}</p>
+        {% if item.condition %}
+            <span class="badge bg-secondary">{{ item.condition }}</span>
+        {% endif %}
+    </p>
 
-<p><strong>Contact:</strong> {{ item.contact_name }} | {{ item.contact_phone }}</p>
 
-<a href="{% url 'marketplace:list' %}" class="btn btn-secondary">
-    Back
-</a>
-<a href="{% url 'marketplace:edit' item.pk %}" class="btn btn-warning">
-    Edit
-</a>
-<a href="{% url 'marketplace:delete' item.pk %}" class="btn btn-danger">
-    Delete
-</a>    
+    <p class="mb-2"><strong>Category:</strong> {{ item.category.name }}</p>
+
+    <p class="text-muted mb-4"><strong>Contact:</strong> {{ item.contact_name }} | {{ item.contact_phone }}</p>
+
+    <div class="d-flex flex-wrap gap-2">
+        <a href="{% url 'marketplace:list' %}" class="btn btn-secondary">
+            Back
+        </a>
+        <a href="{% url 'marketplace:edit' item.pk %}" class="btn btn-warning">
+            Edit
+        </a>
+        <a href="{% url 'marketplace:delete' item.pk %}" class="btn btn-danger">
+            Delete
+        </a>
+    </div>
+</div>
 
 {% endblock %}

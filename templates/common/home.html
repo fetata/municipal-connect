@@ -2,104 +2,141 @@
 
 {% block content %}
 
-<div class="bg-white bg-opacity-50 rounded p-5 mb-5 shadow text-center">
+<div class="glass-panel p-4 p-lg-5 mb-4 hero reveal">
+    <div>
+        <div class="section-kicker mb-2">Community Hub</div>
+        <h1 class="hero-title fw-semibold mb-3">
+            Strong communities start with small actions.
+        </h1>
 
+        <p class="lead text-muted mb-4">
+            Report local issues, share your skills, and help your neighbors.
+            Municipal Connect brings people closer together.
+        </p>
 
-    <h1 class="display-5 fw-bold mb-3">
-        Strong communities start with small actions.
-    </h1>
+        <div class="hero-actions d-flex flex-wrap gap-3">
+            <a href="{% url 'reports:create' %}" class="btn btn-primary btn-lg">
+                Report a Problem
+            </a>
 
-    <p class="lead mb-4">
-        Report local issues, share your skills, and help your neighbors.
-        Municipal Connect brings people closer together.
-    </p>
+            <a href="{% url 'skills:create' %}" class="btn btn-success btn-lg">
+                Share a Skill
+            </a>
 
-    <div class="d-flex justify-content-center gap-3 flex-wrap">
-        <a href="{% url 'reports:create' %}" class="btn btn-primary btn-lg">
-            Report a Problem
-        </a>
+            <a href="{% url 'marketplace:create' %}" class="btn btn-outline-dark btn-lg">
+                Post an Item
+            </a>
+        </div>
 
-        <a href="{% url 'skills:create' %}" class="btn btn-success btn-lg">
-            Share a Skill
-        </a>
-
-        <a href="{% url 'marketplace:create' %}" class="btn btn-outline-dark btn-lg">
-            Post an Item
-        </a>
+        <div class="d-flex flex-wrap gap-2 mt-4">
+            <span class="chip">Quick issue reporting</span>
+            <span class="chip">Neighbor-to-neighbor help</span>
+            <span class="chip">Local sharing</span>
+        </div>
     </div>
 
+    <div class="soft-card p-4 reveal reveal-delay-1">
+        <h3 class="mb-3">How it helps</h3>
+        <p class="text-muted">
+            A welcoming place for residents, volunteers, and local leaders to stay connected.
+        </p>
+        <ul class="list-unstyled mb-0">
+            <li class="d-flex gap-2 mb-2">
+                <span class="fw-semibold text-success">•</span>
+                <span>Track issues and keep progress visible.</span>
+            </li>
+            <li class="d-flex gap-2 mb-2">
+                <span class="fw-semibold text-success">•</span>
+                <span>Match skills with neighbors who need them.</span>
+            </li>
+            <li class="d-flex gap-2">
+                <span class="fw-semibold text-success">•</span>
+                <span>Share items to reduce waste and build trust.</span>
+            </li>
+        </ul>
+    </div>
 </div>
 
 
 <!-- Announcement Section -->
 {% if announcement %}
-<div class="card bg-white bg-opacity-50 shadow-sm h-100">
-
-    <div class="card-body text-center">
-        <h3>{{ announcement.title }}</h3>
-        <p>{{ announcement.content }}</p>
-    </div>
+<div class="glass-panel p-4 mb-4 text-center reveal reveal-delay-2">
+    <div class="section-kicker mb-2">Community Update</div>
+    <h3>{{ announcement.title }}</h3>
+    <p class="mb-0">{{ announcement.content }}</p>
 </div>
 {% endif %}
 
 <!-- Preview Sections -->
-<div class="row mt-4">
+<div class="row g-4">
 
     <!-- Reports -->
-    <div class="col-md-4 mb-4">
-        <h4 class="mb-3">Latest Reports</h4>
+    <div class="col-md-4 reveal reveal-delay-1">
+        <div class="soft-card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-center">
+                <h4 class="mb-0">Latest Reports</h4>
+                <a href="{% url 'reports:list' %}" class="btn btn-sm btn-outline-primary">
+                    View All
+                </a>
+            </div>
 
-        <div class="border rounded p-3">
-            {% for report in latest_reports %}
-                <div class="mb-2">
-                    {{ report.title }}
-                </div>
-            {% empty %}
-                <p class="mb-0">No reports yet.</p>
-            {% endfor %}
+            <div class="mt-3 d-flex flex-column gap-2">
+                {% for report in latest_reports %}
+                    <div class="d-flex align-items-start gap-2 p-2 rounded border border-white border-opacity-25 bg-white bg-opacity-50">
+                        <span class="badge bg-light text-dark border">Report</span>
+                        <div class="fw-semibold">{{ report.title }}</div>
+                    </div>
+                {% empty %}
+                    <p class="mb-0 text-muted">No reports yet.</p>
+                {% endfor %}
+            </div>
         </div>
-
-        <a href="{% url 'reports:list' %}" class="btn btn-sm btn-outline-primary mt-2">
-            View All
-        </a>
     </div>
 
     <!-- Skills -->
-    <div class="col-md-4 mb-4">
-        <h4 class="mb-3">Latest Skills</h4>
+    <div class="col-md-4 reveal reveal-delay-2">
+        <div class="soft-card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-center">
+                <h4 class="mb-0">Latest Skills</h4>
+                <a href="{% url 'skills:list' %}" class="btn btn-sm btn-outline-primary">
+                    View All
+                </a>
+            </div>
 
-        <div class="border rounded p-3">
-            {% for skill in latest_skills %}
-                <div class="mb-2">
-                    {{ skill.name }}
-                </div>
-            {% empty %}
-                <p class="mb-0">No skills yet.</p>
-            {% endfor %}
+            <div class="mt-3 d-flex flex-column gap-2">
+                {% for skill in latest_skills %}
+                    <div class="d-flex align-items-start gap-2 p-2 rounded border border-white border-opacity-25 bg-white bg-opacity-50">
+                        <span class="badge bg-light text-dark border">Skill</span>
+                        <div class="fw-semibold">{{ skill.name }}</div>
+                    </div>
+                {% empty %}
+                    <p class="mb-0 text-muted">No skills yet.</p>
+                {% endfor %}
+            </div>
         </div>
-
-        <a href="{% url 'skills:list' %}" class="btn btn-sm btn-outline-primary mt-2">
-            View All
-        </a>
     </div>
 
     <!-- Marketplace -->
-    <div class="col-md-4 mb-4">
-        <h4 class="mb-3">Latest Marketplace Items</h4>
+    <div class="col-md-4 reveal reveal-delay-3">
+        <div class="soft-card p-3 h-100">
+            <div class="d-flex justify-content-between align-items-center">
+                <h4 class="mb-0">Latest Marketplace Items</h4>
+                <a href="{% url 'marketplace:list' %}" class="btn btn-sm btn-outline-primary">
+                    View All
+                </a>
+            </div>
 
-        <div class="border rounded p-3 ">
-            {% for item in latest_items %}
-                <div class="mb-2">
-                    {{ item.title }}
-                </div>
-            {% empty %}
-                <p class="mb-0">No items yet.</p>
-            {% endfor %}
+            <div class="mt-3 d-flex flex-column gap-2">
+                {% for item in latest_items %}
+                    <div class="d-flex align-items-start gap-2 p-2 rounded border border-white border-opacity-25 bg-white bg-opacity-50">
+                        <span class="badge bg-light text-dark border">Item</span>
+                        <div class="fw-semibold">{{ item.title }}</div>
+                    </div>
+                {% empty %}
+                    <p class="mb-0 text-muted">No items yet.</p>
+                {% endfor %}
+            </div>
         </div>
-
-        <a href="{% url 'marketplace:list' %}" class="btn btn-sm btn-outline-primary mt-2">
-            View All
-        </a>
     </div>
 
 </div>

@@ -40,6 +40,8 @@ class Skill(models.Model):
     level = models.CharField(
         max_length=15,
         choices=LEVEL_CHOICES,
+        blank=True,
+        null=True,
     )
 
     contact_name = models.CharField(

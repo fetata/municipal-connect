@@ -1,4 +1,5 @@
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView
+from django.contrib import messages
 
 from common.mixins import SearchMixin
 from .models import Report
@@ -24,12 +25,27 @@ class ReportCreateView(CreateView):
     success_url = reverse_lazy("reports:list")
 
     def form_valid(self, form):
-        return super().form_valid(form)
+        response = super().form_valid(form)
+        messages.success(self.request, "Report created successfully.")
+        return response
+
+    def form_invalid(self, form):
+        messages.error(self.request, "Please correct the errors below.")
+        return super().form_invalid(form)
 
 class ReportUpdateView(UpdateView):
     model = Report
     form_class = ReportCreateForm
     template_name = "reports/report-edit.html"
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.warning(self.request, "Report updated.")
+        return response
+
+    def form_invalid(self, form):
+        messages.error(self.request, "Please correct the errors below.")
+        return super().form_invalid(form)
 
     def get_success_url(self):
         return reverse_lazy("reports:details", kwargs={"pk": self.object.pk})
@@ -38,3 +54,8 @@ class ReportDeleteView(DeleteView):
     model = Report
     template_name = "reports/report-delete.html"
     success_url = reverse_lazy("reports:list")
+
+    def delete(self, request, *args, **kwargs):
+        response = super().delete(request, *args, **kwargs)
+        messages.warning(self.request, "Report deleted.")
+        return response

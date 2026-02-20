@@ -22,10 +22,12 @@ class MarketplaceCategory(models.Model):
 class MarketplaceItem(models.Model):
     OFFER = "Offer"
     WANTED = "Wanted"
+    GIVEAWAY = "Giveaway"
 
     TYPE_CHOICES = [
-        (OFFER, "Offer"),
-        (WANTED, "Wanted"),
+        ("Offer", "Offer"),
+        ("Wanted", "Wanted"),
+        ("Giveaway", "Giveaway"),
     ]
 
     NEW = "New"
@@ -57,8 +59,10 @@ class MarketplaceItem(models.Model):
     )
 
     condition = models.CharField(
-        max_length=10,
+        max_length=20,
         choices=CONDITION_CHOICES,
+        blank=True,
+        null=True,
     )
 
     contact_name = models.CharField(

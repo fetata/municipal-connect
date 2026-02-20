@@ -2,15 +2,19 @@
 
 {% block content %}
 
-<h2>Create Report</h2>
+<div class="glass-panel p-4 p-lg-5 reveal">
+    <div class="section-kicker mb-2">New Report</div>
+    <h2 class="mb-4">Create Report</h2>
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
+    <form method="post" class="form-stack form-grid">
+        {% csrf_token %}
+        {{ form.as_p }}
 
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
-
-<a href="{% url 'reports:list' %}" class="btn btn-secondary mt-2">Cancel</a>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <a href="{% url 'reports:list' %}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
 
 {% endblock %}
