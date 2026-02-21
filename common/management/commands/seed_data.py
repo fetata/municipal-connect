@@ -33,7 +33,11 @@ class Command(BaseCommand):
         # -------------------------
         # Reports
         # -------------------------
-        statuses = ["Open", "In Progress", "Resolved"]
+        statuses = [
+            Report.Status.OPEN,
+            Report.Status.IN_PROGRESS,
+            Report.Status.RESOLVED,
+        ]
 
         for _ in range(8):
             Report.objects.create(
@@ -61,7 +65,11 @@ class Command(BaseCommand):
         # -------------------------
         # Skills
         # -------------------------
-        levels = ["Beginner", "Intermediate", "Advanced"]
+        levels = [
+            Skill.Level.BEGINNER,
+            Skill.Level.INTERMEDIATE,
+            Skill.Level.ADVANCED,
+        ]
 
         for _ in range(8):
             skill = Skill.objects.create(
@@ -92,8 +100,15 @@ class Command(BaseCommand):
         # -------------------------
         # Marketplace Items
         # -------------------------
-        types = ["Offer", "Request"]
-        conditions = ["New", "Used"]
+        types = [
+            MarketplaceItem.Type.OFFER,
+            MarketplaceItem.Type.WANTED,
+            MarketplaceItem.Type.GIVEAWAY,
+        ]
+        conditions = [
+            MarketplaceItem.Condition.NEW,
+            MarketplaceItem.Condition.USED,
+        ]
 
         for _ in range(8):
             MarketplaceItem.objects.create(

@@ -5,16 +5,10 @@ from django.core.validators import MinLengthValidator, RegexValidator
 
 
 class Report(models.Model):
-
-    OPEN = "Open"
-    IN_PROGRESS = "In Progress"
-    RESOLVED = "Resolved"
-
-    STATUS_CHOICES = [
-        (OPEN, "Open"),
-        (IN_PROGRESS, "In Progress"),
-        (RESOLVED, "Resolved"),
-    ]
+    class Status(models.TextChoices):
+        OPEN = "Open", "Open"
+        IN_PROGRESS = "In Progress", "In Progress"
+        RESOLVED = "Resolved", "Resolved"
 
     title = models.CharField(
         max_length=120,
@@ -31,8 +25,8 @@ class Report(models.Model):
 
     status = models.CharField(
         max_length=15,
-        choices=STATUS_CHOICES,
-        default=OPEN,
+        choices=Status.choices,
+        default=Status.OPEN,
     )
 
     contact_name = models.CharField(max_length=50)
@@ -52,13 +46,13 @@ class Report(models.Model):
         ordering = ["-created_at"]
 
     def is_active(self):
-        return self.status != self.RESOLVED
+        return self.status != self.Status.RESOLVED
 
     def __str__(self):
         return self.title
 
     def clean(self):
-        if self.status == self.RESOLVED and len(self.description) < 20:
+        if self.status == self.Status.RESOLVED and len(self.description) < 20:
             raise ValidationError(
                 "Resolved reports must have a detailed description (at least 20 characters)."
             )

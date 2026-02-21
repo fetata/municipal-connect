@@ -14,9 +14,9 @@
 
     <p class="mb-3">
         <span class="badge
-            {% if item.type == 'Offer' %}bg-primary
-            {% elif item.type == 'Wanted' %}bg-warning text-dark
-            {% elif item.type == 'Giveaway' %}bg-success
+            {% if item.type == item.Type.OFFER %}bg-primary
+            {% elif item.type == item.Type.WANTED %}bg-warning text-dark
+            {% elif item.type == item.Type.GIVEAWAY %}bg-success
             {% endif %}
         ">
             {{ item.type }}

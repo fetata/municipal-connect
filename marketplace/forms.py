@@ -8,4 +8,7 @@ class MarketplaceCreateForm(forms.ModelForm):
         exclude = ["created_at"]
         widgets = {
             "description": forms.Textarea(attrs={"rows": 4}),
+            "image": forms.FileInput(attrs={
+                "class": "form-control"
+            })
         }

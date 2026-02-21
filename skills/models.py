@@ -20,15 +20,10 @@ class SkillCategory(models.Model):
 
 
 class Skill(models.Model):
-    BEGINNER = "Beginner"
-    INTERMEDIATE = "Intermediate"
-    ADVANCED = "Advanced"
-
-    LEVEL_CHOICES = [
-        (BEGINNER, "Beginner"),
-        (INTERMEDIATE, "Intermediate"),
-        (ADVANCED, "Advanced"),
-    ]
+    class Level(models.TextChoices):
+        BEGINNER = "Beginner", "Beginner"
+        INTERMEDIATE = "Intermediate", "Intermediate"
+        ADVANCED = "Advanced", "Advanced"
 
     name = models.CharField(
         max_length=100,
@@ -39,7 +34,7 @@ class Skill(models.Model):
     )
     level = models.CharField(
         max_length=15,
-        choices=LEVEL_CHOICES,
+        choices=Level.choices,
         blank=True,
         null=True,
     )

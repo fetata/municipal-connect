@@ -11,8 +11,10 @@
     <p class="mb-3">{{ report.description }}</p>
 
     <p class="mb-3">
-        {% if report.is_active %}
-            <span class="badge bg-danger">Active</span>
+        {% if report.status == report.Status.OPEN %}
+            <span class="badge bg-warning text-dark">Open</span>
+        {% elif report.status == report.Status.IN_PROGRESS %}
+            <span class="badge bg-primary">In Progress</span>
         {% else %}
             <span class="badge bg-success">Resolved</span>
         {% endif %}

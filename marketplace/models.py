@@ -20,23 +20,14 @@ class MarketplaceCategory(models.Model):
 
 
 class MarketplaceItem(models.Model):
-    OFFER = "Offer"
-    WANTED = "Wanted"
-    GIVEAWAY = "Giveaway"
+    class Type(models.TextChoices):
+        OFFER = "Offer", "Offer"
+        WANTED = "Wanted", "Wanted"
+        GIVEAWAY = "Giveaway", "Giveaway"
 
-    TYPE_CHOICES = [
-        ("Offer", "Offer"),
-        ("Wanted", "Wanted"),
-        ("Giveaway", "Giveaway"),
-    ]
-
-    NEW = "New"
-    USED = "Used"
-
-    CONDITION_CHOICES = [
-        (NEW, "New"),
-        (USED, "Used"),
-    ]
+    class Condition(models.TextChoices):
+        NEW = "New", "New"
+        USED = "Used", "Used"
 
     title = models.CharField(
         max_length=100,
@@ -47,20 +38,16 @@ class MarketplaceItem(models.Model):
         validators=[MinLengthValidator(10)],
     )
 
-    image = models.ImageField(
-        upload_to="marketplace/",
-        blank=True,
-        null=True,
-    )
+
 
     type = models.CharField(
         max_length=10,
-        choices=TYPE_CHOICES,
+        choices=Type.choices,
     )
 
     condition = models.CharField(
         max_length=20,
-        choices=CONDITION_CHOICES,
+        choices=Condition.choices,
         blank=True,
         null=True,
     )
@@ -79,6 +66,12 @@ class MarketplaceItem(models.Model):
         MarketplaceCategory,
         on_delete=models.CASCADE,
         related_name="items",
+    )
+
+    image = models.ImageField(
+        upload_to="marketplace/",
+        blank=True,
+        null=True,
     )
 
     created_at = models.DateTimeField(auto_now_add=True)
