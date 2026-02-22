@@ -5,7 +5,7 @@ from .models import Skill
 class SkillCreateForm(forms.ModelForm):
     class Meta:
         model = Skill
-        exclude = ["created_at"]
+        exclude = ["created_at", "slug"]
         widgets = {
             "name": forms.TextInput(attrs={"placeholder": "Guitar lessons"}),
             "description": forms.Textarea(

@@ -1,5 +1,6 @@
 from django.core.validators import MinLengthValidator, RegexValidator
 from django.db import models
+from django.utils.text import slugify
 
 
 phone_validator = RegexValidator(
@@ -33,6 +34,7 @@ class MarketplaceItem(models.Model):
         max_length=100,
         validators=[MinLengthValidator(3)],
     )
+    slug = models.SlugField()
 
     description = models.TextField(
         validators=[MinLengthValidator(10)],
@@ -81,3 +83,8 @@ class MarketplaceItem(models.Model):
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)

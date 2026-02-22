@@ -1,5 +1,6 @@
 from django.core.validators import MinLengthValidator, RegexValidator
 from django.db import models
+from django.utils.text import slugify
 
 
 phone_validator = RegexValidator(
@@ -29,6 +30,7 @@ class Skill(models.Model):
         max_length=100,
         validators=[MinLengthValidator(3)],
     )
+    slug = models.SlugField()
     description = models.TextField(
         validators=[MinLengthValidator(10)],
     )
@@ -60,3 +62,8 @@ class Skill(models.Model):
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)

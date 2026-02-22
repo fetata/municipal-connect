@@ -16,7 +16,7 @@
             <button type="submit" class="btn btn-danger">
                 Confirm Delete
             </button>
-            <a href="{% url 'reports:details' object.pk %}" class="btn btn-secondary">
+            <a href="{% url 'reports:details' object.pk object.slug %}" class="btn btn-secondary">
                 Cancel
             </a>
         </div>

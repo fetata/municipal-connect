@@ -1,6 +1,7 @@
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.shortcuts import redirect
 
 from common.mixins import SearchMixin
 from .forms import MarketplaceCreateForm
@@ -17,6 +18,13 @@ class MarketplaceDetailView(DetailView):
     model = MarketplaceItem
     template_name = "marketplace/marketplace-details.html"
     context_object_name = "item"
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.kwargs.get("slug") != self.object.slug:
+            return redirect("marketplace:details", pk=self.object.pk, slug=self.object.slug)
+        context = self.get_context_data(object=self.object)
+        return self.render_to_response(context)
 
 class MarketplaceCreateView(CreateView):
     model = MarketplaceItem
@@ -48,7 +56,7 @@ class MarketplaceUpdateView(UpdateView):
         return super().form_invalid(form)
 
     def get_success_url(self):
-        return reverse_lazy("marketplace:details", kwargs={"pk": self.object.pk})
+        return reverse_lazy("marketplace:details", kwargs={"pk": self.object.pk, "slug": self.object.slug})
 
 class MarketplaceDeleteView(DeleteView):
     model = MarketplaceItem

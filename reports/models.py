@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.core.validators import MinLengthValidator, RegexValidator
+from django.utils.text import slugify
 
 
 
@@ -14,6 +15,7 @@ class Report(models.Model):
         max_length=120,
         validators=[MinLengthValidator(5)]
     )
+    slug = models.SlugField()
     description = models.TextField(
         validators=[MinLengthValidator(10)]
     )
@@ -50,6 +52,11 @@ class Report(models.Model):
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
 
     def clean(self):
         if self.status == self.Status.RESOLVED and len(self.description) < 20:

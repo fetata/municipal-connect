@@ -9,5 +9,5 @@ urlpatterns = [
     path("create/", MarketplaceCreateView.as_view(), name="create"),
     path("<int:pk>/edit/", MarketplaceUpdateView.as_view(), name="edit"),
     path("<int:pk>/delete/", MarketplaceDeleteView.as_view(), name="delete"),
-    path("<int:pk>/", MarketplaceDetailView.as_view(), name="details"),
+    path("<int:pk>-<slug:slug>/", MarketplaceDetailView.as_view(), name="details"),
 ]

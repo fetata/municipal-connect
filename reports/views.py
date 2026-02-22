@@ -1,5 +1,6 @@
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView
 from django.contrib import messages
+from django.shortcuts import redirect
 
 from common.mixins import SearchMixin
 from .models import Report
@@ -18,6 +19,13 @@ class ReportDetailView(DetailView):
     model = Report
     template_name = "reports/report-details.html"
     context_object_name = "report"
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.kwargs.get("slug") != self.object.slug:
+            return redirect("reports:details", pk=self.object.pk, slug=self.object.slug)
+        context = self.get_context_data(object=self.object)
+        return self.render_to_response(context)
 
 class ReportCreateView(CreateView):
     model = Report
@@ -49,7 +57,7 @@ class ReportUpdateView(UpdateView):
         return super().form_invalid(form)
 
     def get_success_url(self):
-        return reverse_lazy("reports:details", kwargs={"pk": self.object.pk})
+        return reverse_lazy("reports:details", kwargs={"pk": self.object.pk, "slug": self.object.slug})
 
 class ReportDeleteView(DeleteView):
     model = Report

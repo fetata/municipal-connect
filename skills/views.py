@@ -1,6 +1,7 @@
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.shortcuts import redirect
 
 from common.mixins import SearchMixin
 from .forms import SkillCreateForm
@@ -17,6 +18,13 @@ class SkillDetailView(DetailView):
     model = Skill
     template_name = "skills/skill-details.html"
     context_object_name = "skill"
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.kwargs.get("slug") != self.object.slug:
+            return redirect("skills:details", pk=self.object.pk, slug=self.object.slug)
+        context = self.get_context_data(object=self.object)
+        return self.render_to_response(context)
 
 class SkillCreateView(CreateView):
     model = Skill
@@ -48,7 +56,7 @@ class SkillUpdateView(UpdateView):
         return super().form_invalid(form)
 
     def get_success_url(self):
-        return reverse_lazy("skills:details", kwargs={"pk": self.object.pk})
+        return reverse_lazy("skills:details", kwargs={"pk": self.object.pk, "slug": self.object.slug})
 
 class SkillDeleteView(DeleteView):
     model = Skill
