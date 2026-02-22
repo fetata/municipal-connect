@@ -5,7 +5,8 @@ from common.mixins import SearchMixin
 from .models import Report
 from django.views.generic import CreateView
 from django.urls import reverse_lazy
-from .forms import ReportCreateForm
+from .forms import ReportCreateForm, ReportUpdateForm
+
 
 class ReportListView(SearchMixin, ListView):
     model = Report
@@ -35,7 +36,7 @@ class ReportCreateView(CreateView):
 
 class ReportUpdateView(UpdateView):
     model = Report
-    form_class = ReportCreateForm
+    form_class = ReportUpdateForm
     template_name = "reports/report-edit.html"
 
     def form_valid(self, form):
